@@ -1,47 +1,29 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Usuario
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from .forms import LoginForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
-# Create your views here.
-
-# def login_view(request):
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username')
-#             password = form.cleaned_data.get('password')
-
-#         user = authenticate(request, username=username, password=password)
-#         print(user)
-#         if user is not None:
-#             login(request, user)
-#             print(user, 'adfafd')
-#             return redirect('signup')  # Redirige a la página principal o cualquier otra
-#         else:
-#             messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
-#     return render(request, 'login.html', {'form': LoginForm()})
-
-
-def bajaUsuario(request, id: int):
-    # usuario = Usuario.objects.filter(id=id).first() # Esto me trae el usuario y si no lo encuentra devuelve none
-    try: 
-        usuarios = Usuario.objects.get(id=id) # esto va a traer el usuario y si no lo encuentra tira una excepcion
-        print(usuarios) # id aparece aunque yo no lo haya agregado
+@login_required
+def bajaUsuario(request):
+    try:
         print(request)
-        perteneciaUsuario = usuarios.id == id
+        print(request.user)
+        print(request.user.id)
+        print(request.user.username)
+        print(request.user.email)
+        print('El usuario esta autenticado?',request.user.is_authenticated)
+        print('El usuario tiene permiso de administrador?',request.user.is_staff)
+        print('Es superUsuario?',request.user.is_superuser)
+        if request.user.is_authenticated:
+            usuario = request.user
+            logout(request)
+            usuario.delete()
+        return HttpResponse('Fue eliminado correctamente')
         
-        if not perteneciaUsuario:
-            return JsonResponse(data={'error': 'No tenes acceso'}, status=403)
-        
-        return render(request=request, template_name='index.html', context={'usuarios': usuarios})
-    except Usuario.DoesNotExist:
-        return JsonResponse(data={'error': 'No found'}, status=403)
-        # return JsonResponse
-
+    except Exception:
+        return HttpResponse('Debe iniciar sesion para darse de baja')
 
 
     
