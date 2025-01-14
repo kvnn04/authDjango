@@ -30,16 +30,4 @@ class DecodeObject(AbsDecode):
         except Exception as e:
             print(e)
             raise ValueError('Error al decodificar el token')
-        
-    @staticmethod
-    def decodeForDb(token: str) -> dict:
-        condicion = isinstance(token, (str))
-        if not condicion:
-            raise ValueError(message='Solo acepta strings')
-        
-        try:
-            decodeToken = decode(jwt=token, key=ConfigEnv.SECRET_KEY_FOR_ENCODE_DB.value, algorithms=['HS256'])
-            return decodeToken
-        except Exception as e:
-            print(e)
-            raise ValueError('Error al decodificar el token')
+    

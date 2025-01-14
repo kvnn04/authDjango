@@ -8,7 +8,15 @@
 <body>
     <header>
         <nav>
+            <ul>
+                <li><a href="/alta/signup">signUp</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="/alta/logout">logOut</a></li>
 
+                {% else %}
+                <li><a href="/alta/login">logIn</a></li>
+                {% endif %}
+            </ul>
         </nav>
     </header>
 

@@ -34,17 +34,3 @@ class EncodeObject(AbsEncode):
             print(f"Error: {e}")
             raise ValueError("Ocurrió un error al generar el token")
     
-    @staticmethod
-    def encodeForInDb(diccionario: dict)-> str:
-        condicion = isinstance(diccionario, (dict))
-        if not condicion:
-            raise ValueError(message='Espera un diccionario')
-
-        try:
-            diccionario['iat'] = datetime.now(timezone.utc)
-            payload = encode(payload=diccionario, key=ConfigEnv.SECRET_KEY_FOR_ENCODE_DB.value, algorithm='HS256')
-            return payload
-        except Exception as e:
-            print(f"Error: {e}")
-            raise ValueError("Ocurrió un error al generar el token")
-        

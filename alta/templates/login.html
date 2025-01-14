@@ -4,12 +4,9 @@
 
 {% block content %}
 
-{{error}}
-
-<form method="post">
+<form action="/alta/login/", method="POST">
     {% csrf_token %}
-    {{ form.as_p }}  <!-- Muestra el formulario -->
-    <button type="submit">Registrar</button>
+    {{ form.as_p }}
+    <button type="submit">iniciar sesion</button>
 </form>
-
 {% endblock %}

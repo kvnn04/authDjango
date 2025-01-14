@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models import CharField
 from django.contrib.auth.hashers import make_password
+
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
 # Create your models here.
 
 class Usuario(models.Model):
@@ -10,7 +13,7 @@ class Usuario(models.Model):
     email: CharField = CharField(max_length=150, null=False, blank=False, unique=True)
     pwd: CharField = CharField(max_length=70, null=False, blank=False)
 
-    def __rerp__(self):
+    def __str__(self):
         return self.username
     
     def set_password(self, raw_password):
@@ -21,3 +24,6 @@ class Usuario(models.Model):
         """Verifica si la contraseña proporcionada coincide con el hash almacenado"""
         from django.contrib.auth.hashers import check_password
         return check_password(raw_password, self.pwd)
+    
+
+
