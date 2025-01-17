@@ -11,11 +11,12 @@
             <ul>
                 <li><a href="/alta/signup">signUp</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="/alta/logout">logOut</a></li>
+                <li><a href="/alta/logout">log out</a></li>
+                <li><a href="/modify/user">modificar perfil</a></li>
                 <li><a href="/baja/delete">darme de baja</a></li>
                 
                 {% else %}
-                <li><a href="/alta/login">logIn</a></li>
+                <li><a href="/alta/login">log in</a></li>
                 {% endif %}
             </ul>
         </nav>

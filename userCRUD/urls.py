@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('alta/', view=include('alta.urls')),
     path('baja/', view=include('baja.urls')),
-    path('', view=saludo)
+    path('modify/', view=include('modificacion.urls')),
+    path('', view=saludo, name='home')
 
 ]
